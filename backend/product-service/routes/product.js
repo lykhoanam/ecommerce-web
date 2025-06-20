@@ -42,7 +42,7 @@ router.get("/:id", async(req, res) => {
         if(!product) return res.status(404).json({msg: "Product not found"})
         res.json(product)
     }catch(e){
-        res.status(500).send("Server Error")
+        res.status(500).json({ error: e.message });
     }
 })
 
@@ -78,6 +78,32 @@ router.delete("/:id", async(req, res) => {
         res.json({msg: "Product deleted"})
     }catch(e){
         res.status(500).send("Server Error !")
+    }
+})
+
+
+router.put("/:id/deduct", async(req, res) => {
+    const {quantity} = req.body
+
+    try{
+
+        const product = await Product.findById(req.params.id)
+        if(!product){
+            return res.status(404).json({msg: "Product not found"})
+        }
+
+        if(product.stock < quantity){
+            return res.status(400).json({msg: "Not enough stock"})
+        }
+
+        product.stock -= quantity
+        await product.save()
+
+        res.json({msg: "Stock deducted", stock: product.stock})
+
+    }catch(e){
+        console.log(e)
+        res.status(500).json({error: e.message})
     }
 })
 

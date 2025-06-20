@@ -29,6 +29,18 @@ services:
     depends_on:
       - mongo
       - product-service
+  
+  order-service:
+    build: ./order-service
+    ports:
+      - 5003:5003
+    environment:
+      - MONGO_URI=${MONGO_URI_ORDER}
+      - PRODUCT_SERVICE_URI=http://product-service:5001
+    depends_on:
+      - mongo
+      - product-service
+      
   mongo:
     image: mongo
     ports:

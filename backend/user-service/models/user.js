@@ -17,15 +17,15 @@ const userSchema = new mongoose.Schema({
     },
 })
 
-userSchema.pre("save", async(next) => {
-    if (!this.isModified("password")) return next()
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next()
 
-    try {
-        this.password = await argon2.hash(this.password)
-        next()
-    } catch (error) {
-        return next(error)
-    }
+  try {
+    this.password = await argon2.hash(this.password)
+    next()
+  } catch (error) {
+    return next(error)
+  }
 })
 
 module.exports = mongoose.model("User", userSchema)
