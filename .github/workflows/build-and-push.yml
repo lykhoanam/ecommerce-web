@@ -15,12 +15,18 @@ jobs:
       matrix:
         service:
           [
-            backend/user-service,
-            backend/product-service,
-            backend/shopping-cart-service,
-            backend/order-service,
-            backend/payment-service,
-            backend/notification-service
+            # backend/user-service,
+            # backend/product-service,
+            # backend/shopping-cart-service,
+            # backend/order-service,
+            # backend/payment-service,
+            # backend/notification-service
+            user-service,
+            product-service,
+            shopping-cart-service,
+            order-service,
+            payment-service,
+            notification-service,
           ]
 
     steps:
