@@ -14,12 +14,18 @@ jobs:
       matrix:
         service:
           [
-            backend/user-service,
-            backend/product-service,
-            backend/shopping-cart-service,
-            backend/order-service,
-            backend/payment-service,
-            backend/notification-service  
+            # backend/user-service,
+            # backend/product-service,
+            # backend/shopping-cart-service,
+            # backend/order-service,
+            # backend/payment-service,
+            # backend/notification-service  
+            user-service,
+            product-service,
+            shopping-cart-service,
+            order-service,
+            payment-service,
+            notification-service,
           ]
 
     steps:
@@ -37,5 +43,5 @@ jobs:
       
       - name: Deploy to Kubernetes
         run: |
-          kubectl apply -f ${{ matrix.service }}/deployment.yaml
-          kubectl apply -f ${{ matrix.service }}/service.yaml
+          kubectl apply -f ./backend/${{ matrix.service }}/deployment.yaml
+          kubectl apply -f ./backend/${{ matrix.service }}/service.yaml

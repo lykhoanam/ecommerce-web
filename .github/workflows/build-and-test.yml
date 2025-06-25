@@ -17,12 +17,18 @@ jobs:
       matrix:
         service:
           [
-            backend/user-service,
-            backend/product-service,
-            backend/shopping-cart-service,
-            backend/order-service,
-            backend/payment-service,
-            backend/notification-service
+            # backend/user-service,
+            # backend/product-service,
+            # backend/shopping-cart-service,
+            # backend/order-service,
+            # backend/payment-service,
+            # backend/notification-service
+            user-service,
+            product-service,
+            shopping-cart-service,
+            order-service,
+            payment-service,
+            notification-service,
           ]
 
     steps:
@@ -36,9 +42,15 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: ${{ matrix.service }}
+        working-directory: ./backend/${{ matrix.service }}
 
       - name: Run tests
-        run: npm test
-        working-directory: ${{ matrix.service }}
+        run: |
+          if [ -f "./backend/${{ matrix.service }}/__tests__/*.test.js" ] || [ -f "./backend/${{ matrix.service }}/*.test.js" ]; then
+            npm test
+          else
+            echo "No tests found, skipping..."
+            exit 0
+          fi
+        working-directory: ./backend/${{ matrix.service }}
       

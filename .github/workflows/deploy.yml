@@ -12,12 +12,18 @@ jobs:
       matrix:
         service:
           [
-            backend/user-service,
-            backend/product-service,
-            backend/shopping-cart-service,
-            backend/order-service,
-            backend/payment-service,
-            backend/notification-service
+            # backend/user-service,
+            # backend/product-service,
+            # backend/shopping-cart-service,
+            # backend/order-service,
+            # backend/payment-service,
+            # backend/notification-service  
+            user-service,
+            product-service,
+            shopping-cart-service,
+            order-service,
+            payment-service,
+            notification-service,
           ]
 
     steps:
@@ -44,11 +50,11 @@ jobs:
       - name: Build and push Docker images 
         uses: docker/build-push-action@v3
         with:
-          context: ./${{ matrix.service }}
-          file: ./${{ matrix.service }}/Dockerfile 
+          context: ./backend/${{ matrix.service }}
+          file: ./backend/${{ matrix.service }}/Dockerfile 
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/${{ matrix.service }}:latest
       
       - name: Deploy to Docker Swarm
         run: |
-          docker stack deploy -c docker-compose.yml ecommerce
+           docker stack deploy -c backend/docker-compose.yml ecommerce
