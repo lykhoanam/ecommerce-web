@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: shopping-cart-service
-          image: thisisaarush/shopping-cart-service:latest
+          image: lknaw2801/shopping-cart-service:latest
           ports:
             - containerPort: 5002

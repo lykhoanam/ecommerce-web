@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: product-service
-          image: thisisaarush/product-service:latest
+          image: lknaw2801/product-service:latest
           ports:
             - containerPort: 5001

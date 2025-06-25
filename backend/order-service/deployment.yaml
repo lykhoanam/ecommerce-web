@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: order-service
-          image: thisisaarush/order-service:latest
+          image: lknaw2801/order-service:latest
           ports:
             - containerPort: 5003

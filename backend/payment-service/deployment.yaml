@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: payment-service
-          image: thisisaarush/payment-service:latest
+          image: lknaw2801/payment-service:latest
           ports:
             - containerPort: 5004

@@ -16,6 +16,6 @@ spec:
       spec:
         containers:
           - name: notification-service 
-            image: lkn/notification-service:latest
+            image: lknaw2801/notification-service:latest
             ports:
               - containerPort: 5005

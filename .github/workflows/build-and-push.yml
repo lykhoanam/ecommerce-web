@@ -24,7 +24,7 @@ jobs:
             user-service,
             product-service,
             shopping-cart-service,
-            order-service,
+            -order-service,
             payment-service,
             notification-service,
           ]
@@ -53,8 +53,8 @@ jobs:
       - name: Build and push Docker Images
         uses: docker/build-push-action@v3
         with:
-          context: ./${{ matrix.service }}
-          file: ./${{ matrix.service }}/Dockerfile
+          context: ./backend/${{ matrix.service }}  # Cập nhật đường dẫn
+          file: ./backend/${{ matrix.service }}/Dockerfile  # Cập nhật đường dẫn
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/${{ matrix.service}}:latest
 
