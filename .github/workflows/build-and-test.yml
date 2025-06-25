@@ -1,0 +1,44 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        service:
+          [
+            backend/user-service,
+            backend/product-service,
+            backend/shopping-cart-service,
+            backend/order-service,
+            backend/payment-service,
+            backend/notification-service
+          ]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.jobs
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        run: npm Install
+        working-directory: ${{ matrix.service }}
+
+      - name: Run tests
+        run: npm test
+        working-directory: ${{ matrix.service }}
+      
