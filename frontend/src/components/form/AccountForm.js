@@ -4,11 +4,15 @@ import commonContext from '../../contexts/common/commonContext';
 import useForm from '../../hooks/useForm';
 import useOutsideClose from '../../hooks/useOutsideClose';
 import useScrollDisable from '../../hooks/useScrollDisable';
+import {validateLogin, validateSignup } from './formValidator';
+import { FaFacebookF, FaGoogle, FaTwitter } from 'react-icons/fa';
+import { showError } from '../../utils/toastMessage';
 
 const AccountForm = () => {
 
-    const { isFormOpen, toggleForm } = useContext(commonContext);
+    const { isFormOpen, toggleForm, formMode, setFormMode } = useContext(commonContext);
     const { inputValues, handleInputValues, handleFormSubmit } = useForm();
+    const [errors, setErrors] = useState({});
 
     const formRef = useRef();
 
@@ -18,12 +22,28 @@ const AccountForm = () => {
 
     useScrollDisable(isFormOpen);
 
-    const [isSignupVisible, setIsSignupVisible] = useState(false);
+    // const [isSignupVisible, setIsSignupVisible] = useState(false);
+    const isSignupVisible = formMode === 'signup';
 
+    // // Signup-form visibility toggling
+    // const handleIsSignupVisible = () => {
+    //     setIsSignupVisible(prevState => !prevState);
+    // };
 
-    // Signup-form visibility toggling
-    const handleIsSignupVisible = () => {
-        setIsSignupVisible(prevState => !prevState);
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const validationErrors = isSignupVisible
+            ? validateSignup(inputValues)
+            : validateLogin(inputValues);
+
+        console.log("Validation errors:", validationErrors);
+        setErrors(validationErrors);
+
+        if (Object.keys(validationErrors).length === 0) {
+            console.log('Submitting form with:', inputValues);
+            handleFormSubmit(isSignupVisible);
+        }
     };
 
 
@@ -33,7 +53,7 @@ const AccountForm = () => {
                 isFormOpen && (
                     <div className="backdrop">
                         <div className="modal_centered">
-                            <form id="account_form" ref={formRef} onSubmit={handleFormSubmit}>
+                            <form id="account_form" ref={formRef} onSubmit={handleSubmit}>
 
                                 {/*===== Form-Header =====*/}
                                 <div className="form_head">
@@ -41,9 +61,10 @@ const AccountForm = () => {
                                     <p>
                                         {isSignupVisible ? 'Already have an account ?' : 'New to LKN Privé ?'}
                                         &nbsp;&nbsp;
-                                        <button type="button" onClick={handleIsSignupVisible}>
+                                        <button type="button" onClick={() => setFormMode(isSignupVisible ? 'login' : 'signup')}>
                                             {isSignupVisible ? 'Login' : 'Create an account'}
                                         </button>
+
                                     </p>
                                 </div>
 
@@ -54,13 +75,14 @@ const AccountForm = () => {
                                             <div className="input_box">
                                                 <input
                                                     type="text"
-                                                    name="username"
+                                                    name="name"
                                                     className="input_field"
-                                                    value={inputValues.username || ''}
+                                                    value={inputValues.name || ''}
                                                     onChange={handleInputValues}
-                                                    required
+                                                    style={{color:'black'}}
+                                                    
                                                 />
-                                                <label className="input_label">Username</label>
+                                                <label className="input_label">Full Name</label>
                                             </div>
                                         )
                                     }
@@ -68,10 +90,11 @@ const AccountForm = () => {
                                     <div className="input_box">
                                         <input
                                             type="email"
-                                            name="mail"
+                                            name="email"
                                             className="input_field"
-                                            value={inputValues.mail || ''}
+                                            value={inputValues.email || ''}
                                             onChange={handleInputValues}
+                                            style={{color:'black'}}
                                             required
                                         />
                                         <label className="input_label">Email</label>
@@ -84,6 +107,7 @@ const AccountForm = () => {
                                             className="input_field"
                                             value={inputValues.password || ''}
                                             onChange={handleInputValues}
+                                            style={{color:'black'}}
                                             required
                                         />
                                         <label className="input_label">Password</label>
@@ -98,12 +122,22 @@ const AccountForm = () => {
                                                     className="input_field"
                                                     value={inputValues.conf_password || ''}
                                                     onChange={handleInputValues}
+                                                    style={{color:'black'}}
                                                     required
                                                 />
                                                 <label className="input_label">Confirm Password</label>
                                             </div>
                                         )
                                     }
+
+                                    {Object.keys(errors).length > 0 && (
+                                        <div style={{ color: 'red' }}>
+                                            {errors.name && <div style={{ marginBottom: '8px' }}>{errors.name}</div>}
+                                            {errors.email && <div style={{ marginBottom: '8px' }}>{errors.email}</div>}
+                                            {errors.password && <div style={{ marginBottom: '8px' }}>{errors.password}</div>}
+                                            {errors.conf_password && <div>{errors.conf_password}</div>}
+                                        </div>
+                                    )}
 
                                     <button
                                         type="submit"
@@ -116,11 +150,66 @@ const AccountForm = () => {
 
                                 {/*===== Form-Footer =====*/}
                                 <div className="form_foot">
-                                    <p>or login with</p>
-                                    <div className="login_options">
-                                        <Link to="/">Facebook</Link>
-                                        <Link to="/">Google</Link>
-                                        <Link to="/">Twitter</Link>
+                                    <p style={{ textAlign: 'center' }}>or login with</p>
+                                    <div style={{
+                                        display: 'flex',
+                                        gap: '15px',
+                                        justifyContent: 'center',
+                                        marginTop: '10px'
+                                    }}>
+                                        <Link to="/"
+                                            style={{
+                                                background: '#3b5998',
+                                                borderRadius: '50%',
+                                                width: '40px',
+                                                height: '40px',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                color: 'white',
+                                                fontSize: '18px',
+                                                textDecoration: 'none'
+                                            }}
+                                            title="Login with Facebook"
+                                        >
+                                            <FaFacebookF />
+                                        </Link>
+
+                                        <Link to="/"
+                                            style={{
+                                                background: '#db4a39',
+                                                borderRadius: '50%',
+                                                width: '40px',
+                                                height: '40px',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                color: 'white',
+                                                fontSize: '18px',
+                                                textDecoration: 'none'
+                                            }}
+                                            title="Login with Google"   
+                                        >
+                                            <FaGoogle />
+                                        </Link>
+
+                                        <Link to="/"
+                                            style={{
+                                                background: '#1DA1F2',
+                                                borderRadius: '50%',
+                                                width: '40px',
+                                                height: '40px',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                color: 'white',
+                                                fontSize: '18px',
+                                                textDecoration: 'none'
+                                            }}
+                                            title="Login with Twitter"
+                                        >
+                                            <FaTwitter />
+                                        </Link>
                                     </div>
                                 </div>
 
@@ -128,6 +217,7 @@ const AccountForm = () => {
                                 <div
                                     className="close_btn"
                                     title="Close"
+                                    style={{background:'white', color: 'black', fontSize:' 30px', marginTop:'10px', marginRight:'10px'}}
                                     onClick={() => toggleForm(false)}
                                 >
                                     &times;

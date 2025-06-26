@@ -1,5 +1,5 @@
-⭐️ Scalable E-commerce Backend (Microservices)
-🧰 Tech Stack
+# ⭐️ Scalable E-commerce Backend (Microservices)
+## 🧰 Tech Stack
 Node.js, Express.js – Backend framework
 
 MongoDB, Mongoose – Database & ODM
@@ -14,7 +14,7 @@ Stripe – Payment processing
 
 GitHub Actions – CI/CD pipeline
 
-🧩 Services & Features
+## 🧩 Services & Features
 Service	Description
 User Service	User registration, login, JWT authentication, argon2 password hashing
 Product Service	Manage product listings, categories, inventory
@@ -23,7 +23,7 @@ Order Service	Place orders, track status, manage order history
 Payment Service	Integrate Stripe for secure payment handling
 Notification Service	Send email (via NodeMailer) & SMS (via Twilio) notifications
 
-⚙️ Architecture Overview
+## ⚙️ Architecture Overview
 Microservices Architecture:
 Each service is an independent codebase with its own database and container.
 
@@ -42,25 +42,17 @@ GitHub Actions automates builds, tests, and deployment to Docker Hub or a contai
 Authentication & Authorization:
 JWT tokens are used for auth; passwords are hashed securely using argon2.
 
-✅ Pre-requisites
+## ✅ Pre-requisites
 Docker & Docker Compose installed:
-
-bash
-Sao chép
-Chỉnh sửa
 docker --version
 docker compose version
 .env files:
 Ensure all services have properly configured .env files (e.g., DB URLs, JWT secrets, API keys, etc.)
 
-🚀 Running the Project (Recommended Way)
-bash
-Sao chép
-Chỉnh sửa
-docker compose up --build
---build: Ensures services are rebuilt if any code changes are detected.
+## 🚀 Running the Project (Recommended Way)
 
-🔁 GitHub Actions (CI/CD)
+docker compose up --build -d
+## 🔁 GitHub Actions (CI/CD)
 To enable CI/CD deployment via GitHub Actions:
 
 Go to your GitHub repository → Settings → Secrets and Variables → Actions → New Repository Secret.
@@ -71,3 +63,40 @@ DOCKER_USERNAME: Your Docker Hub username
 
 DOCKER_PASSWORD: Your Docker Hub password or access token
 
+# 🎨 Frontend – React UI
+
+## 🛠 Tech Stack
+
+React.js – Component-based UI
+
+React Router – Client-side routing
+
+Context API – Global state management
+
+Custom Hooks – Reusable logic (useForm, useScrollDisable, useOutsideClose, etc.)
+
+Toastify – User-friendly toast notifications
+
+TailwindCSS / SCSS – Styling and layout
+
+## 🧩 Key Features
+
+Feature	Description
+Responsive UI	Modern, minimal UI that adapts across screen sizes
+Account Modal	Login/Signup modal with toggling and form validation
+Product Showcase	Displays featured products, discounts, and category-based listings
+Auth Integration	Uses JWT for authentication, form data is sent via fetch API
+Form Validation	Custom validation for login and signup forms
+Social Login UI	UI support for Facebook, Google, Twitter login buttons (OAuth not wired)
+
+# 📸 UI Screenshots
+
+## 🔸 Homepage
+
+![alt text](image.png)
+
+# 🔸 Account – Login & Register
+
+![alt text](image-1.png)
+
+![alt text](image-3.png)

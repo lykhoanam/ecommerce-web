@@ -18,8 +18,15 @@ const cartReducer = (state, action) => {
                     return item;
                 });
             } else {
-                updatedCartItems = [...state.cartItems, action.payload.item];
-            }
+                updatedCartItems = [
+                    ...state.cartItems,
+                    {
+                    ...action.payload.item,
+                    quantity: 1, // ✅ set default quantity
+                    },
+                ];
+            }       
+
 
             return {
                 ...state,

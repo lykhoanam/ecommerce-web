@@ -27,10 +27,11 @@ const ProductDetails = () => {
 
     // showing the Product based on the received 'id'
     const product = productsData.find(item => item.id === prodId);
+    
 
     const { images, title, info, category, finalPrice, originalPrice, ratings, rateCount } = product;
 
-    const [previewImg, setPreviewImg] = useState(images[0]);
+    const [previewImg, setPreviewImg] = useState(images);
 
 
     // handling Add-to-cart
@@ -105,23 +106,23 @@ const ProductDetails = () => {
                                         <small className="del_price"><del>{oldPrice}</del></small>
                                     </h2>
                                     <p className="saved_price">You save: {savedPrice} ({savedDiscount}%)</p>
-                                    <span className="tax_txt">(Inclusive of all taxes)</span>
+                                    {/* <span className="tax_txt">(Inclusive of all taxes)</span> */}
                                 </div>
 
                                 <div className="badge">
-                                    <span><IoMdCheckmark /> In Stock</span>
+                                    <span><IoMdCheckmark /> Còn hàng</span>
                                 </div>
                             </div>
 
-                            <div className="separator"></div>
+                            {/* <div className="separator"></div>
 
-                            <div className="prod_details_offers">
+                             <div className="prod_details_offers">
                                 <h4>Offers and Discounts</h4>
                                 <ul>
                                     <li>No Cost EMI on Credit Card</li>
                                     <li>Pay Later & Avail Cashback</li>
                                 </ul>
-                            </div>
+                            </div> */} 
 
                             <div className="separator"></div>
 

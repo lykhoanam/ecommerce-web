@@ -44,12 +44,22 @@ const Cart = () => {
                 <div className="container">
                     {
                         cartQuantity === 0 ? (
-                            <EmptyView
-                                icon={<BsCartX />}
-                                msg="Your Cart is Empty"
+                            <div style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                minHeight: '60vh',
+                                gap: '1.5rem',
+                                textAlign: 'center'
+                            }}>
+                                <EmptyView
+                                icon={<BsCartX style={{ fontSize: '5rem', color: '#444' }} />}
+                                msg={<span style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Your Cart is Empty</span>}
                                 link="/all-products"
                                 btnText="Start Shopping"
-                            />
+                                />
+                            </div>
                         ) : (
                             <div className="wrapper cart_wrapper">
                                 <div className="cart_left_col">

@@ -17,7 +17,7 @@ const RelatedSlider = (props) => {
     return (
         <Swiper
             modules={[Pagination, A11y]}
-            spaceBetween={10}
+            spaceBetween={30}
             slidesPerView={"auto"}
             pagination={{ clickable: true }}
             breakpoints={{

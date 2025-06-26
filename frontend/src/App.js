@@ -5,7 +5,8 @@ import RouterRoutes from './routes/RouterRoutes';
 import Footer from './components/common/Footer';
 import BackTop from './components/common/BackTop';
 import { FiltersProvider } from './contexts/filters/filtersContext';
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
       <CommonProvider>
         <FiltersProvider>
           <CartProvider>
+             <ToastContainer />
             <Header />
             <RouterRoutes />
             <Footer />

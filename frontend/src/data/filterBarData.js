@@ -42,22 +42,13 @@ export const brandsMenu = [
 export const categoryMenu = [
     {
         id: 1,
-        label: "Headphones",
+        label: "Men",
         checked: false,
     },
     {
         id: 2,
-        label: "Earbuds",
+        label: "Women",
         checked: false,
     },
-    {
-        id: 3,
-        label: "Earphones",
-        checked: false,
-    },
-    {
-        id: 4,
-        label: "Neckbands",
-        checked: false,
-    },
+    
 ];

@@ -46,6 +46,7 @@ const SearchBar = () => {
                                     className="input_field"
                                     placeholder="Search for product..."
                                     onChange={handleSearching}
+                                    style={{ color: 'black' }}
                                 />
                                 {/* <button
                                     type="button"

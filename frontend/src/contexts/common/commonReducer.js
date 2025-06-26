@@ -28,6 +28,13 @@ const commonReducer = (state, action) => {
                 searchResults: action.payload.results
             };
 
+        case 'SET_FORM_MODE':
+            return {
+                ...state,
+                formMode: action.payload.mode
+            };  
+
+
 
         default:
             return state;

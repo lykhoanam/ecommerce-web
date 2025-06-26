@@ -7,9 +7,12 @@ const commonContext = createContext();
 // Initial State
 const initialState = {
     isFormOpen: false,
-    formUserInfo: '',
+    formUserInfo: localStorage.getItem('user')
+        ? JSON.parse(localStorage.getItem('user')).name
+        : '',
     isSearchOpen: false,
-    searchResults: []
+    searchResults: [],
+    formMode: 'login' 
 };
 
 // Common-Provider Component
@@ -47,13 +50,22 @@ const CommonProvider = ({ children }) => {
         });
     };
 
+    const setFormMode = (mode) => {
+        return dispatch({
+            type: 'SET_FORM_MODE',
+            payload: { mode }
+        });
+    };
+
+
     // Context values
     const values = {
         ...state,
         toggleForm,
         setFormUserInfo,
         toggleSearch,
-        setSearchResults
+        setSearchResults,
+        setFormMode
     };
 
     return (

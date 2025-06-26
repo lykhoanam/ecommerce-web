@@ -6,7 +6,7 @@ import ProductReviews from './ProductReviews';
 
 const ProductSummary = (props) => {
 
-    const { brand, title, info, category, type, connectivity , description} = props;
+    const { brand, title, type, description, size} = props;
 
     const { active, handleActive, activeClass } = useActive('specs');
 
@@ -46,27 +46,27 @@ const ProductSummary = (props) => {
                             active === 'specs' ? (
                                 <div className="prod_specs">
                                     <ul>
-                                        {/* <li>
+                                        <li>
                                             <span>Brand</span>
                                             <span>{brand}</span>
-                                        </li> */}
+                                        </li>
                                         <li>
                                             <span>Model</span>
                                             <span>{title}</span>
                                         </li>
-                                        <li>
+                                        {/* <li>
                                             <span>Generic Name</span>
                                             <span>{category}</span>
-                                        </li>
+                                        </li> */}
                                         <li>
                                             <span>Type</span>
                                             <span>{type}</span>
                                         </li>
-                                        {/* <li>
-                                            <span>Connectivity</span>
-                                            <span>{connectivity}</span>
-                                        </li>
                                         <li>
+                                            <span>Size</span>
+                                            <span>{size}</span>
+                                        </li>
+                                        {/* <li>
                                             <span>Microphone</span>
                                             <span>Yes</span>
                                         </li> */}
