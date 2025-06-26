@@ -46,7 +46,7 @@ router.post("/:userId/add", async (req, res) => {
         res.status(201).json(cart)
 
     }catch(e){
-        res.status(500).json({ error: e.message });
+        res.status(500).json({ msg: e.message });
     }
 })
 

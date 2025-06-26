@@ -2,12 +2,14 @@ const express = require("express")
 const mongoose = require("mongoose")
 const dotenv = require("dotenv")
 const paymentRoutes = require("./routes/payment")
+const cors = require('cors');
 
 const PORT = process.env.PORT || 5004
 
 dotenv.config()
 const app = express()
 app.use(express.json())
+app.use(cors());
 
 // routes
 app.use("/api/payments", paymentRoutes)

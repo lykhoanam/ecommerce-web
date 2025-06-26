@@ -57,7 +57,7 @@ router.post("/:userId", async(req, res) => {
         res.status(201).json(order)
 
     }catch(e){
-        res.status(500).json({ error: e.message });
+        res.status(500).json({ msg: e.message });
     }
 })
 
@@ -68,7 +68,7 @@ router.get("/:userId", async(req, res) => {
         const orders = await Order.find({userId})
         res.json(orders)
     }catch(e){
-        res.status(500).json({ error: e.message });
+        res.status(500).json({ msg: e.message });
     }
 })
 
@@ -81,7 +81,7 @@ router.get("/:userId/:orderId", async(req, res) => {
         if(!order) return res.status(404).json({msg: "Order not found"})
         res.json(order)
     }catch(e){
-       res.status(500).json({ error: e.message });
+       res.status(500).json({ msg: e.message });
     }
 })
 
@@ -99,7 +99,7 @@ router.put("/:orderId/status", async(req, res) => {
         await order.save()
         res.json(order)
     }catch(e){
-        res.status(500).json({ error: e.message });
+        res.status(500).json({ msg: e.message });
     }
 })
 
