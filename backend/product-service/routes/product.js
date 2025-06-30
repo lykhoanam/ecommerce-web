@@ -4,16 +4,42 @@ const router = express.Router()
 
 // create prodcut
 router.post("/create", async(req,res) => {
-    const {name, description, price, category, stock} = req.body
+    const {
+        title,
+        brand,
+        type,
+        variants,
+        size,
+        price,
+        finalPrice,
+        originalPrice,
+        category,
+        rateCount,
+        info,
+        ratings,
+        path,
+        images,
+        description,
+    } = req.body;
     try{
 
         const newProduct = new Product({
-            name,
-            description,
+            title,
+            brand,
+            type,
+            variants,
+            size,
             price,
+            finalPrice,
+            originalPrice,
             category,
-            stock
-        })
+            rateCount,
+            info,
+            ratings,
+            path,
+            images,
+            description,
+        });
 
         await newProduct.save()
         res.status(201).json(newProduct)
@@ -23,8 +49,31 @@ router.post("/create", async(req,res) => {
     }
 })
 
+// create multiple products
+router.post("/bulk-create", async (req, res )=>{
+    const products = req.body;
+
+    if(!Array.isArray(products) || products.length === 0){
+        return res.status(400).json({ msg: "Product array is required "});
+    }
+
+    try{
+
+        const createdProducts = await Product.insertMany(products);
+        res.status(201).json({
+            msg: `${createdProducts.length} products created`,
+            products: createdProducts
+        })
+
+    }catch(e){
+        res.status(500).json({ msg: "Failed to create products", error: error.message});
+    }
+
+})
+
+
 //get all products
-router.get("/", async(req, res) => {
+router.get("/get", async(req, res) => {
     try{
 
         const products = await Product.find()
@@ -47,17 +96,43 @@ router.get("/:id", async(req, res) => {
 })
 
 // update product
-router.put("/:id", async (req, res) => {
-    const {name, description, price, category, stock} = req.body
+router.put("/update/:id", async (req, res) => {
+    const {
+    title,
+    brand,
+    type,
+    variants,
+    size,
+    price,
+    finalPrice,
+    originalPrice,
+    category,
+    rateCount,
+    info,
+    ratings,
+    path,
+    images,
+    description,
+  } = req.body;
     try{
         const updateProduct = await Product.findByIdAndUpdate(
             req.params.id,
             {
-                name,
-                description,
+                title,
+                brand,
+                type,
+                variants,
+                size,
                 price,
+                finalPrice,
+                originalPrice,
                 category,
-                stock
+                rateCount,
+                info,
+                ratings,
+                path,
+                images,
+                description,
             },
             {new: true}
         )
@@ -71,7 +146,7 @@ router.put("/:id", async (req, res) => {
 })
 
 // Delete Product
-router.delete("/:id", async(req, res) => {
+router.delete("/delete/:id", async(req, res) => {
     try{
         const product = await Product.findByIdAndDelete(req.params.id)
         if(!product) return res.status(404).json({msg: "Product not found"})
@@ -81,30 +156,52 @@ router.delete("/:id", async(req, res) => {
     }
 })
 
+//Delete multiple products by IDs
+router.delete("/bulk-delete", async(req, res) => {
+    const {ids} = req.body;
 
-router.put("/:id/deduct", async(req, res) => {
-    const {quantity} = req.body
+    if(!Array.isArray(ids) || ids.length === 0){
+        return res.status(400).json({msg: "Array of products IDs is required"});
+    }
 
     try{
+        
+        const result = await Product.deleteMany({_id: {$in: ids } });
 
-        const product = await Product.findById(req.params.id)
-        if(!product){
-            return res.status(404).json({msg: "Product not found"})
-        }
-
-        if(product.stock < quantity){
-            return res.status(400).json({msg: "Not enough stock"})
-        }
-
-        product.stock -= quantity
-        await product.save()
-
-        res.json({msg: "Stock deducted", stock: product.stock})
+        res.json({
+            msg: `${result.deletedCount} products deleted`,
+            deletedCount: result.deletedCount
+        });
 
     }catch(e){
-        console.log(e)
-        res.status(500).json({msg: e.message})
+        res.status(500).json({msg: "Server error", error: e.message});
     }
 })
+
+
+// router.put("/:id/deduct", async(req, res) => {
+//     const {quantity} = req.body
+
+//     try{
+
+//         const product = await Product.findById(req.params.id)
+//         if(!product){
+//             return res.status(404).json({msg: "Product not found"})
+//         }
+
+//         if(product.stock < quantity){
+//             return res.status(400).json({msg: "Not enough stock"})
+//         }
+
+//         product.stock -= quantity
+//         await product.save()
+
+//         res.json({msg: "Stock deducted", stock: product.stock})
+
+//     }catch(e){
+//         console.log(e)
+//         res.status(500).json({msg: e.message})
+//     }
+// })
 
 module.exports = router

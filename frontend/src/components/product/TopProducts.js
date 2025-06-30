@@ -1,34 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
 import useActive from '../../hooks/useActive';
 import productsData from '../../data/productsData';
 import ProductCard from './ProductCard';
+import { getProducts } from '../../api/productApi';
+
 
 
 const TopProducts = () => {
 
-    const [products, setProducts] = useState(productsData);
+    const [products, setProducts] = useState([]);
+    const [allProducts, setAllProducts] = useState([]);
     const { activeClass, handleActive } = useActive(0);
 
-    // making a unique set of product's category
-    const productsCategory = [
-        'All',
-        ...new Set(productsData.map(item => item.category))
-    ];
-
-    // handling product's filtering
-    const handleProducts = (category, i) => {
-        if (category === 'All') {
-            setProducts(productsData);
-            handleActive(i);
-            return;
+    useEffect(() => {
+    const fetchProducts = async () => {
+        try {
+            const data = await getProducts();
+            setAllProducts(data);
+            setProducts(data); 
+        } catch (error) {
+            console.error('Lỗi:', error.message);
         }
-
-        const filteredProducts = productsData.filter(item => item.category === category);
-        setProducts(filteredProducts);
-        handleActive(i);
     };
+
+    fetchProducts();
+  }, []);
+
+    const productsCategory = ['All', ...new Set(allProducts.map(item => item.category))];
+
+
+    const handleProducts = (category, i) => {
+        handleActive(i);
+        if (category === 'All') return setProducts(allProducts);
+
+        const filtered = allProducts.filter(item => item.category === category);
+        setProducts(filtered);
+    };    
 
 
     return (

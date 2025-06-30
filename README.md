@@ -8,50 +8,57 @@ Docker, Docker Compose – Containerization
 
 Nginx – API Gateway & Load Balancer
 
-Kubernetes – Container orchestration
+<!-- Kubernetes – Container orchestration
 
-Stripe – Payment processing
+ -->
 
 GitHub Actions – CI/CD pipeline
 
 ## 🧩 Services & Features
-Service	Description
-User Service	User registration, login, JWT authentication, argon2 password hashing
-Product Service	Manage product listings, categories, inventory
-Shopping Cart Service	Add/remove/update items in user carts
-Order Service	Place orders, track status, manage order history
-Payment Service	Integrate Stripe for secure payment handling
-Notification Service	Send email (via NodeMailer) & SMS (via Twilio) notifications
+
+| Service              |Description                                                  |
+|----------------------|--------------------------------------------------------------|
+| **User Service**       | User registration, login, JWT authentication, argon2 password hashing |
+| **Product Service**  | Manage product listings, categories, inventory               |
+| **Shopping Cart Service** | Add/remove/update items in user carts                      |
+| **Order Service**    | Place orders, track status, manage order history             |
+| **Payment Service**  | Integrate Stripe for secure payment handling                 |
+| **Notification Service** | Send email (via NodeMailer) notifications |
 
 ## ⚙️ Architecture Overview
-Microservices Architecture:
+### Microservices Architecture:
 Each service is an independent codebase with its own database and container.
 
-API Gateway & Load Balancing:
+### API Gateway & Load Balancing:
 Nginx handles routing and balances load between multiple service instances.
 
-Containerization:
+### Containerization:
 Docker ensures consistent environments and isolated service deployments.
 
-Deployment with Kubernetes:
-Each service runs in its own pod. Kubernetes handles auto-scaling, fault tolerance, and rolling updates.
+<!-- ### Deployment with Kubernetes:
+Each service runs in its own pod. Kubernetes handles auto-scaling, fault tolerance, and rolling updates. -->
 
-CI/CD Pipeline:
+### CI/CD Pipeline:
 GitHub Actions automates builds, tests, and deployment to Docker Hub or a container registry.
 
-Authentication & Authorization:
+### Authentication & Authorization:
 JWT tokens are used for auth; passwords are hashed securely using argon2.
 
 ## ✅ Pre-requisites
 Docker & Docker Compose installed:
+
 docker --version
+
 docker compose version
+
 .env files:
+
 Ensure all services have properly configured .env files (e.g., DB URLs, JWT secrets, API keys, etc.)
 
 ## 🚀 Running the Project (Recommended Way)
 
 docker compose up --build -d
+
 ## 🔁 GitHub Actions (CI/CD)
 To enable CI/CD deployment via GitHub Actions:
 
@@ -93,10 +100,10 @@ Social Login UI	UI support for Facebook, Google, Twitter login buttons (OAuth no
 
 ## 🔸 Homepage
 
-![alt text](image.png)
+![alt text](ui-screen/image.png)
 
 # 🔸 Account – Login & Register
 
-![alt text](image-1.png)
+![alt text](ui-screen/image-1.png)
 
-![alt text](image-3.png)
+![alt text](ui-screen/image-3.png)
