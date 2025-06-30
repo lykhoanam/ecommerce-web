@@ -7,6 +7,7 @@ import BackTop from './components/common/BackTop';
 import { FiltersProvider } from './contexts/filters/filtersContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ChatBox from './components/common/ChatBox';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
             <RouterRoutes />
             <Footer />
             <BackTop />
+            <ChatBox />
           </CartProvider>
         </FiltersProvider>
       </CommonProvider>

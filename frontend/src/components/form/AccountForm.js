@@ -6,7 +6,6 @@ import useOutsideClose from '../../hooks/useOutsideClose';
 import useScrollDisable from '../../hooks/useScrollDisable';
 import {validateLogin, validateSignup } from './formValidator';
 import { FaFacebookF, FaGoogle, FaTwitter } from 'react-icons/fa';
-import { showError } from '../../utils/toastMessage';
 
 const AccountForm = () => {
 

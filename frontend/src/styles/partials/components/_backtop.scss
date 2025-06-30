@@ -1,15 +1,17 @@
 .back_top {
     position: fixed;
-    bottom: 2vh;
+    bottom: 10vh;
     right: 1.3vw;
     z-index: 99;
-    background-color: var(--main-color);
+    background-color: #f33d3d;
     color: #fff;
     font-size: 1.4rem;
-    padding: 0.6rem;
+    padding: 16px;
     cursor: pointer;
-    border-radius: 3px;
+    border-radius: 50%;
     transform: scale(0);
+    animation: pulse 2.5s infinite;
+    transition: transform 0.3s ease;
     @include centered;
     @include toggleVisibility(hidden, 0);
     @include transition($duration: 0.3s);
@@ -18,4 +20,34 @@
         transform: scale(1);
         @include toggleVisibility(visible, 1);
     }
+}
+
+.back_top:hover {
+  transform: scale(1.08) rotate(-2deg);
+}
+
+/* Pulse Effect */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(243, 61, 61, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(243, 61, 61, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(243, 61, 61, 0);
+  }
+}
+
+/* Optional: shake lightly every ~10s */
+@keyframes subtle-shake {
+  0%, 100% { transform: translateX(0); }
+  10% { transform: translateX(-2px); }
+  20% { transform: translateX(2px); }
+  30% { transform: translateX(-2px); }
+  40% { transform: translateX(2px); }
+}
+
+.back_top.shake {
+  animation: pulse 2.5s infinite, subtle-shake 10s infinite;
 }
