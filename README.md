@@ -96,14 +96,3 @@ Auth Integration	Uses JWT for authentication, form data is sent via fetch API
 Form Validation	Custom validation for login and signup forms
 Social Login UI	UI support for Facebook, Google, Twitter login buttons (OAuth not wired)
 
-# 📸 UI Screenshots
-
-## 🔸 Homepage
-
-![alt text](ui-screen/image.png)
-
-# 🔸 Account – Login & Register
-
-![alt text](ui-screen/image-1.png)
-
-![alt text](ui-screen/image-3.png)
