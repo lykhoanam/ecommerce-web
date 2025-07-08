@@ -8,47 +8,41 @@ const PRODUCT_SERVICE_URI = process.env.PRODUCT_SERVICE_URI || "http://product-s
 
 // add item to cart
 router.post("/:userId/add", async (req, res) => {
-    const {userId} = req.params
-    const {productId, quantity} = req.body
+  const { userId } = req.params;
+  const { productId, quantity, size } = req.body;
 
-    try{
-        const productResponse = await axios.get(
-            `${PRODUCT_SERVICE_URI}/api/products/${productId}`
-        )
-
-
-        if(!productResponse.data){
-            return res.status(404).json({msg: "Product not found"})
-        }
-
-        let cart = await Cart.findOne({userId})
-
-        if(!cart){
-            cart = new Cart({
-                userId,
-                items: [{
-                    productId,
-                    quantity
-                }]
-            })
-        }else{
-            const itemIndex = cart.items.findIndex(
-                (item) => item.productId === productId
-            )
-            if(itemIndex > -1){
-                cart.items[itemIndex].quantity += quantity
-            }else{
-                cart.items.push({productId, quantity})
-            }
-        }
-
-        await cart.save()
-        res.status(201).json(cart)
-
-    }catch(e){
-        res.status(500).json({ msg: e.message });
+  try {
+    const productResponse = await axios.get(`${PRODUCT_SERVICE_URI}/api/products/${productId}`);
+    if (!productResponse.data) {
+      return res.status(404).json({ msg: "Product not found" });
     }
-})
+
+    let cart = await Cart.findOne({ userId });
+
+    if (!cart) {
+      cart = new Cart({
+        userId,
+        items: [{ productId, quantity, size }]
+      });
+    } else {
+      const itemIndex = cart.items.findIndex(
+        (item) => item.productId === productId && item.size === size
+      );
+
+      if (itemIndex > -1) {
+        cart.items[itemIndex].quantity += quantity;
+      } else {
+        cart.items.push({ productId, quantity, size });
+      }
+    }
+
+    await cart.save();
+    res.status(201).json(cart);
+  } catch (e) {
+    res.status(500).json({ msg: e.message });
+  }
+});
+
 
 // get user cart
 router.get("/:userId", async(req, res) => {
@@ -80,29 +74,31 @@ router.delete("/:userId/remove/:productId", async(req, res) => {
 })
 
 //update item quantity
-router.put("/:userId/update/:productId", async(req, res) => {
-    const {userId, productId} = req.params
-    const {quantity} = req.body
+router.put("/:userId/update/:productId", async (req, res) => {
+  const { userId, productId } = req.params;
+  const { quantity, size } = req.body;
 
-    try{
-        const cart = await Cart.findOne({userId})
-        if(!cart) return res.status(404).json({msg: "Cart not found"})
-        
-        const itemIndex = cart.items.findIndex(
-            (item) => item.productId === productId
-        )
+  try {
+    const cart = await Cart.findOne({ userId });
+    if (!cart) return res.status(404).json({ msg: "Cart not found" });
 
-        if(itemIndex > -1){
-            cart.items[itemIndex].quantity = quantity
-        }else{
-            return res.status(404).json({msg: "Product not found in cart"})
-        }
+    const itemIndex = cart.items.findIndex(
+      (item) => item.productId === productId
+    );
 
-        await cart.save()
-        res.json(cart)
-    }catch(e){
-        res.status(500).send("Server error")
+    if (itemIndex === -1) {
+      return res.status(404).json({ msg: "Product not found in cart" });
     }
-})
+
+    if (quantity !== undefined) cart.items[itemIndex].quantity = quantity;
+    if (size !== undefined) cart.items[itemIndex].size = size;
+
+    await cart.save();
+    res.json(cart);
+  } catch (e) {
+    res.status(500).send("Server error");
+  }
+});
+
 
 module.exports = router
